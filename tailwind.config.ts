@@ -22,6 +22,8 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+          light: "hsl(var(--primary-light))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -47,15 +49,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+        chat: {
+          sidebar: "hsl(var(--chat-sidebar))",
+          "sidebar-hover": "hsl(var(--chat-sidebar-hover))",
+          "sidebar-active": "hsl(var(--chat-sidebar-active))",
+          background: "hsl(var(--chat-background))",
+          "message-own": "hsl(var(--chat-message-own))",
+          "message-other": "hsl(var(--chat-message-other))",
+          input: "hsl(var(--chat-input))",
+        },
+        status: {
+          online: "hsl(var(--online))",
+          away: "hsl(var(--away))",
+          offline: "hsl(var(--offline))",
         },
       },
       borderRadius: {

@@ -8,51 +8,57 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Telegram-inspired color scheme */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 216 28% 7%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 216 28% 7%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 216 28% 7%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Telegram blue theme */
+    --primary: 207 87% 54%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 207 87% 48%;
+    --primary-light: 207 87% 96%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 11% 96%;
+    --secondary-foreground: 216 28% 7%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 11% 96%;
+    --muted-foreground: 215 25% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 207 87% 54%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 214 20% 92%;
+    --input: 214 20% 92%;
+    --ring: 207 87% 54%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Chat specific colors */
+    --chat-sidebar: 0 0% 100%;
+    --chat-sidebar-hover: 210 11% 96%;
+    --chat-sidebar-active: 207 87% 96%;
+    --chat-background: 210 11% 98%;
+    --chat-message-own: 207 87% 54%;
+    --chat-message-other: 0 0% 100%;
+    --chat-input: 0 0% 100%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Status colors */
+    --online: 120 100% 40%;
+    --away: 39 100% 50%;
+    --offline: 215 25% 45%;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(207 87% 54%), hsl(207 87% 48%));
+    --gradient-chat: linear-gradient(180deg, hsl(210 11% 98%), hsl(207 87% 96%));
   }
 
   .dark {

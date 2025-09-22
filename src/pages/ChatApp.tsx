@@ -66,7 +66,7 @@ export const ChatApp = ({ currentUser, onLogout }: ChatAppProps) => {
       const result = await apiService.sendPrivateMessage({
         chat_id: currentChat.id,
         content,
-        message_type: type
+        message_type: type as 'text' | 'image' | 'file' | 'voice' | 'video'
       });
 
       if (result.success && result.data) {

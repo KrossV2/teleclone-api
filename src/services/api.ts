@@ -1,10 +1,56 @@
 import { User, Chat, Message, Call, Notification, Reaction, ApiResponse, SearchParams, PaginationParams } from '@/types';
+import { API_CONFIG, replaceUrlParams } from '@/config/api';
+
+// DTOs that match the C# backend
+interface LoginDto {
+  email?: string;
+  username?: string;
+  password: string;
+}
+
+interface RegisterDto {
+  email: string;
+  username: string;
+  password: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+interface CreatePrivateChatDto {
+  participant_id: string;
+}
+
+interface CreateGroupChatDto {
+  name: string;
+  description?: string;
+  participant_ids: string[];
+}
+
+interface SendMessageDto {
+  chat_id: string;
+  content: string;
+  message_type?: 'text' | 'image' | 'file' | 'voice' | 'video';
+  reply_to?: string;
+}
+
+interface AddUserToGroupDto {
+  user_id: string;
+}
+
+interface AddReactionDto {
+  emoji: string;
+}
+
+interface StartCallDto {
+  receiver_id: string;
+  type: 'voice' | 'video';
+}
 
 class ApiService {
   private baseUrl: string;
   private token: string | null = null;
 
-  constructor(baseUrl: string = '') {
+  constructor(baseUrl: string = API_CONFIG.BASE_URL) {
     this.baseUrl = baseUrl;
     this.token = localStorage.getItem('auth_token');
   }
@@ -49,14 +95,14 @@ class ApiService {
   }
 
   // Authentication
-  async login(credentials: { email: string; password: string }) {
+  async login(credentials: LoginDto) {
     return this.request<{ user: User; token: string }>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   }
 
-  async register(userData: { email: string; username: string; password: string; first_name?: string; last_name?: string }) {
+  async register(userData: RegisterDto) {
     return this.request<{ user: User; token: string }>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
@@ -122,10 +168,10 @@ class ApiService {
   }
 
   // Chats
-  async createPrivateChat(participantId: string) {
+  async createPrivateChat(data: CreatePrivateChatDto) {
     return this.request<Chat>('/api/chats/private', {
       method: 'POST',
-      body: JSON.stringify({ participant_id: participantId }),
+      body: JSON.stringify(data),
     });
   }
 
@@ -133,7 +179,7 @@ class ApiService {
     return this.request<Chat[]>(`/api/chats/private/${userId}`);
   }
 
-  async createGroupChat(data: { name: string; description?: string; participant_ids: string[] }) {
+  async createGroupChat(data: CreateGroupChatDto) {
     return this.request<Chat>('/api/chats/group', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -144,17 +190,17 @@ class ApiService {
     return this.request<Chat[]>(`/api/chats/group/${userId}`);
   }
 
-  async addUserToGroup(groupId: string, userId: string) {
+  async addUserToGroup(groupId: string, data: AddUserToGroupDto) {
     return this.request(`/api/chats/group/${groupId}/add-user`, {
       method: 'POST',
-      body: JSON.stringify({ user_id: userId }),
+      body: JSON.stringify(data),
     });
   }
 
-  async removeUserFromGroup(groupId: string, userId: string) {
+  async removeUserFromGroup(groupId: string, data: AddUserToGroupDto) {
     return this.request(`/api/chats/group/${groupId}/remove-user`, {
       method: 'DELETE',
-      body: JSON.stringify({ user_id: userId }),
+      body: JSON.stringify(data),
     });
   }
 
@@ -163,7 +209,7 @@ class ApiService {
   }
 
   // Messages
-  async sendPrivateMessage(data: { chat_id: string; content: string; message_type?: string; reply_to?: string }) {
+  async sendPrivateMessage(data: SendMessageDto) {
     return this.request<Message>('/api/messages/private', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -240,10 +286,10 @@ class ApiService {
   }
 
   // Reactions
-  async addReaction(messageId: string, emoji: string) {
+  async addReaction(messageId: string, data: AddReactionDto) {
     return this.request<Reaction>(`/api/messages/${messageId}/reactions`, {
       method: 'POST',
-      body: JSON.stringify({ emoji }),
+      body: JSON.stringify(data),
     });
   }
 
@@ -256,7 +302,7 @@ class ApiService {
   }
 
   // Calls
-  async startCall(data: { receiver_id: string; type: 'voice' | 'video' }) {
+  async startCall(data: StartCallDto) {
     return this.request<Call>('/api/calls/start', {
       method: 'POST',
       body: JSON.stringify(data),

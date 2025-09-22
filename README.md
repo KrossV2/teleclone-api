@@ -1,73 +1,128 @@
-# Welcome to your Lovable project
+# Telegram Clone
 
-## Project info
+Bu loyiha React + TypeScript + Tailwind CSS yordamida yaratilgan Telegram klonidir.
 
-**URL**: https://lovable.dev/projects/bd8bcd44-4a63-4fda-8c7b-498e5913cd7c
+## Xususiyatlar
 
-## How can I edit this code?
+- ✅ Autentifikatsiya (Login/Register) 
+- ✅ Real-time chat
+- ✅ Private va Group chatlari
+- ✅ Fayl yuklash va media
+- ✅ Xabar qidirish
+- ✅ Reaksiyalar (Emoji)
+- ✅ Voice/Video qo'ng'iroqlar tarixi
+- ✅ Push bildirishnomalar
+- ✅ Responsive design
 
-There are several ways of editing your application.
+## Backend API
 
-**Use Lovable**
+Loyiha C# .NET Core Clean Architecture backend bilan ishlaydi. API endpoints:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bd8bcd44-4a63-4fda-8c7b-498e5913cd7c) and start prompting.
+### Auth
+- `POST /api/auth/login` - Tizimga kirish
+- `POST /api/auth/register` - Ro'yxatdan o'tish  
+- `POST /api/auth/logout` - Tizimdan chiqish
 
-Changes made via Lovable will be committed automatically to this repo.
+### Users
+- `GET /api/users` - Barcha foydalanuvchilar
+- `GET /api/users/{id}` - Bitta foydalanuvchi
+- `PUT /api/users/{id}` - Foydalanuvchi ma'lumotlarini o'zgartirish
+- `DELETE /api/users/{id}` - Foydalanuvchini o'chirish
+- `GET /api/users/search?name={query}` - Foydalanuvchilarni qidirish
+- `POST /api/users/{id}/upload-photo` - Profil rasmini yuklash
+- `POST /api/users/{userId}/block/{blockedUserId}` - Bloklash
+- `DELETE /api/users/{userId}/unblock/{blockedUserId}` - Blokdan chiqarish
 
-**Use your preferred IDE**
+### Chats  
+- `POST /api/chats/private` - Private chat yaratish
+- `GET /api/chats/private/{userId}` - Private chatlar ro'yxati
+- `POST /api/chats/group` - Group chat yaratish
+- `GET /api/chats/group/{userId}` - Group chatlar ro'yxati
+- `POST /api/chats/group/{groupId}/add-user` - Guruhga qo'shish
+- `DELETE /api/chats/group/{groupId}/remove-user` - Guruhdan chiqarish
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Messages
+- `POST /api/messages/private` - Xabar yuborish
+- `GET /api/messages/{chatId}` - Chat xabarlari
+- `PUT /api/messages/{messageId}` - Xabarni tahrirlash
+- `DELETE /api/messages/{messageId}` - Xabarni o'chirish
+- `GET /api/messages/search?text={query}` - Xabarlarni qidirish
+- `POST /api/messages/{messageId}/pin` - Xabarni pin qilish
+- `POST /api/messages/{messageId}/read` - O'qilgan deb belgilash
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Files
+- `POST /api/files/{chatId}/upload` - Fayl yuklash
+- `GET /api/files/{chatId}` - Chat fayllari
+- `DELETE /api/files/{fileId}` - Faylni o'chirish
 
-Follow these steps:
+### Reactions
+- `POST /api/messages/{messageId}/reactions` - Reaksiya qo'shish
+- `GET /api/messages/{messageId}/reactions` - Reaksiyalar ro'yxati
+- `DELETE /api/messages/{messageId}/reactions/{reactionId}` - Reaksiyani o'chirish
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Calls
+- `POST /api/calls/start` - Qo'ng'iroq boshlash
+- `POST /api/calls/end/{callId}` - Qo'ng'iroqni tugatish
+- `GET /api/calls/{userId}` - Qo'ng'iroqlar tarixi
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Notifications
+- `GET /api/notifications/{userId}` - Bildirishnomalar
+- `POST /api/notifications/mark-read/{id}` - O'qilgan deb belgilash
 
-# Step 3: Install the necessary dependencies.
-npm i
+## Backend API o'rnatish
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+1. Backend URL ni sozlang:
+   `src/config/api.ts` faylida `BASE_URL` ni o'zgartiring:
+   ```typescript
+   BASE_URL: 'https://your-backend-api-url.com'
+   ```
+
+2. Backend repositoriyasi: https://github.com/KrossV2/Telegram_V2
+
+## O'rnatish
+
+1. Repository ni clone qiling:
+```bash
+git clone https://github.com/yourusername/telegram-clone.git
+cd telegram-clone
+```
+
+2. Dependencies o'rnating:
+```bash
+npm install
+```
+
+3. Loyihani ishga tushiring:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Texnologiyalar
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **UI Components**: Radix UI, Lucide Icons
+- **State Management**: React Query
+- **Routing**: React Router
+- **Backend Integration**: Fetch API
+- **Build Tool**: Vite
 
-**Use GitHub Codespaces**
+## Loyiha strukturasi
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+src/
+├── components/          # React komponentlar
+│   ├── auth/           # Autentifikatsiya komponentlari
+│   ├── chat/           # Chat komponentlari  
+│   └── ui/             # UI komponentlar (shadcn/ui)
+├── pages/              # Sahifalar
+├── services/           # API servislar
+├── types/              # TypeScript turlari
+├── config/             # Konfiguratsiya
+└── lib/                # Yordamchi kutubxonalar
+```
 
-## What technologies are used for this project?
+## Backend Repository
 
-This project is built with:
+Backend kodlari: https://github.com/KrossV2/Telegram_V2
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/bd8bcd44-4a63-4fda-8c7b-498e5913cd7c) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+C# .NET Core Clean Architecture asosida qurilgan.

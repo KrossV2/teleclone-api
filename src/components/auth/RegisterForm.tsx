@@ -41,11 +41,17 @@ export const RegisterForm = ({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
 
     try {
       const { confirmPassword, ...userData } = formData;
-      const result = await apiService.register(userData);
+      const result = await apiService.register({
+        Email: userData.email,
+        Username: userData.username,
+        Password: userData.password,
+        FirstName: userData.first_name,
+        LastName: userData.last_name
+      });
       
       if (result.success && result.data) {
-        apiService.setToken(result.data.token);
-        onSuccess(result.data.user, result.data.token);
+        apiService.setToken(result.data.Token);
+        onSuccess(result.data.User, result.data.Token);
         toast({ title: "Muvaffaqiyat!", description: "Hisob yaratildi!" });
       } else {
         toast({ 

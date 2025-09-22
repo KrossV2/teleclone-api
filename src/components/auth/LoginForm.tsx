@@ -26,10 +26,13 @@ export const LoginForm = ({ onSuccess, onSwitchToRegister }: LoginFormProps) => 
     setIsLoading(true);
 
     try {
-      const result = await apiService.login(formData);
+      const result = await apiService.login({
+        Email: formData.email,
+        Password: formData.password
+      });
       if (result.success && result.data) {
-        apiService.setToken(result.data.token);
-        onSuccess(result.data.user, result.data.token);
+        apiService.setToken(result.data.Token);
+        onSuccess(result.data.User, result.data.Token);
         toast({ title: "Muvaffaqiyatli kirish!", description: "Xush kelibsiz!" });
       } else {
         toast({ 

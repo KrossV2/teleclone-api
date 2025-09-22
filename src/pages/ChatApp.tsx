@@ -64,9 +64,9 @@ export const ChatApp = ({ currentUser, onLogout }: ChatAppProps) => {
 
     try {
       const result = await apiService.sendPrivateMessage({
-        chat_id: currentChat.id,
-        content,
-        message_type: type as 'text' | 'image' | 'file' | 'voice' | 'video'
+        ChatId: currentChat.id,
+        Content: content,
+        MessageType: type as 'text' | 'image' | 'file' | 'voice' | 'video'
       });
 
       if (result.success && result.data) {
@@ -109,8 +109,8 @@ export const ChatApp = ({ currentUser, onLogout }: ChatAppProps) => {
 
     try {
       const result = await apiService.startCall({
-        receiver_id: otherParticipant.user_id,
-        type
+        ReceiverId: otherParticipant.user_id,
+        Type: type
       });
 
       if (result.success) {

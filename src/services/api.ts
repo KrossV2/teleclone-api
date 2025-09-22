@@ -3,47 +3,47 @@ import { API_CONFIG, replaceUrlParams } from '@/config/api';
 
 // DTOs that match the C# backend
 interface LoginDto {
-  email?: string;
-  username?: string;
-  password: string;
+  Email?: string;
+  Username?: string;
+  Password: string;
 }
 
 interface RegisterDto {
-  email: string;
-  username: string;
-  password: string;
-  first_name?: string;
-  last_name?: string;
+  Email: string;
+  Username: string;
+  Password: string;
+  FirstName?: string;
+  LastName?: string;
 }
 
 interface CreatePrivateChatDto {
-  participant_id: string;
+  ParticipantId: string;
 }
 
 interface CreateGroupChatDto {
-  name: string;
-  description?: string;
-  participant_ids: string[];
+  Name: string;
+  Description?: string;
+  ParticipantIds: string[];
 }
 
 interface SendMessageDto {
-  chat_id: string;
-  content: string;
-  message_type?: 'text' | 'image' | 'file' | 'voice' | 'video';
-  reply_to?: string;
+  ChatId: string;
+  Content: string;
+  MessageType?: 'text' | 'image' | 'file' | 'voice' | 'video';
+  ReplyTo?: string;
 }
 
 interface AddUserToGroupDto {
-  user_id: string;
+  UserId: string;
 }
 
 interface AddReactionDto {
-  emoji: string;
+  Emoji: string;
 }
 
 interface StartCallDto {
-  receiver_id: string;
-  type: 'voice' | 'video';
+  ReceiverId: string;
+  Type: 'voice' | 'video';
 }
 
 class ApiService {
@@ -96,14 +96,14 @@ class ApiService {
 
   // Authentication
   async login(credentials: LoginDto) {
-    return this.request<{ user: User; token: string }>('/api/auth/login', {
+    return this.request<{ User: User; Token: string }>('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
   }
 
   async register(userData: RegisterDto) {
-    return this.request<{ user: User; token: string }>('/api/auth/register', {
+    return this.request<{ User: User; Token: string }>('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
@@ -141,9 +141,9 @@ class ApiService {
 
   async uploadProfilePhoto(id: string, file: File) {
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('Photo', file);
     
-    return this.request<{ avatar_url: string }>(`/api/users/${id}/upload-photo`, {
+    return this.request<{ AvatarUrl: string }>(`/api/users/${id}/upload-photo`, {
       method: 'POST',
       headers: {},
       body: formData,
@@ -151,7 +151,7 @@ class ApiService {
   }
 
   async searchUsers(query: string, params?: PaginationParams) {
-    const searchParams = new URLSearchParams({ name: query, ...(params as any) });
+    const searchParams = new URLSearchParams({ Name: query, ...(params as any) });
     return this.request<User[]>(`/api/users/search?${searchParams.toString()}`);
   }
 
@@ -228,7 +228,7 @@ class ApiService {
   async updateMessage(messageId: string, content: string) {
     return this.request<Message>(`/api/messages/${messageId}`, {
       method: 'PUT',
-      body: JSON.stringify({ content }),
+      body: JSON.stringify({ Content: content }),
     });
   }
 
@@ -245,7 +245,7 @@ class ApiService {
   }
 
   async searchMessages(query: string, params?: PaginationParams) {
-    const searchParams = new URLSearchParams({ text: query, ...(params as any) });
+    const searchParams = new URLSearchParams({ Text: query, ...(params as any) });
     return this.request<Message[]>(`/api/messages/search?${searchParams.toString()}`);
   }
 
@@ -264,7 +264,7 @@ class ApiService {
   // Files
   async uploadFile(chatId: string, file: File) {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('File', file);
     
     return this.request(`/api/files/${chatId}/upload`, {
       method: 'POST',
